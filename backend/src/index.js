@@ -3,6 +3,7 @@ const express = require('express');
 
 const app = express();
 
+app.use(express.json());
 /**
  * HTTP methods:
  * 
@@ -12,7 +13,20 @@ const app = express();
  * DELETE: Delete information on the backend. 
  */
 
+/**
+ * Param types:
+ *  
+ * Query params: Filters and Pagination
+ * Route params: Identify Resources (Update / Delete)
+ * Request Body: Content when creating and editing resources. (JSON)
+ */
+
 app.get('/projects', (request,response) => {
+    const { title, owner } = request.query;
+
+    console.log(title);
+    console.log(owner);
+
     return response.json([
         'Project 1',
         'Project 2'
@@ -20,6 +34,11 @@ app.get('/projects', (request,response) => {
 });
 
 app.post('/projects', (request,response) => {
+    const { title, owner } = request.body
+
+    console.log(title);
+    console.log(owner);
+
     return response.json([
         'Project 1',
         'Project 2',
@@ -28,6 +47,10 @@ app.post('/projects', (request,response) => {
 });
 
 app.put('/projects/:id', (request,response) => {
+    const {id} = request.params;
+
+    console.log( id );
+
     return response.json([
         'Project 4',
         'Project 2',
