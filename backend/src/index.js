@@ -1,9 +1,11 @@
 const { request, response } = require('express');
 const express = require('express');
+const cors = require('cors');
 const { uuid, isUuid } = require('uuidv4');//Create Unique Universal ID
 
 const app = express();
 
+app.use(cors());//!!DevMod!!
 app.use(express.json());
 /**
  * HTTP methods:
@@ -33,9 +35,7 @@ function logRequest(request, response, next){
     const { method, url} = request;
 
     const logLabel = `[${method.toUpperCase()}] ${url}`;
-    console.log('1');
     console.time(logLabel);
-    console.log('2');
     next(); // Next Middleware.
     console.timeEnd(logLabel);
     
@@ -61,8 +61,6 @@ app.get('/projects', (request,response) => {
     const results = title
         ? projects.filter(project => project.title.includes(title))
         : projects; 
-
-    console.log('3');
 
         
     return response.json(results);
